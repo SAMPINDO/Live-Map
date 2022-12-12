@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+ <meta charset="utf-8" />
+<script>
+var childwin;
+const childname = "popup";
+function openChild() {
+    childwin = window.open('http://127.0.0.1:5500/index.html', childname, 'height=300px, width=500px');
+}
+function GetParameter() {
+    if(document.getElementById("boolean").checked)
+    {
+         switch(document.getElementById("Text2").value)
+         {
+             case 0 : return false;
+             case 1 : return true;
+             default : return true;
+         }
+    } else return true;
+}
+function sendMessage(){
+    let msg= JSON.parse(document.getElementById("Text1").value);
+    console.log(msg);
+    // In production, DO NOT use '*', use toe target domain
+    childwin.postMessage(msg,'*')// childwin is the targetWindow
+    childwin.focus();
+}
+</script>
+</head>
+<body>
+    <form>
+        <fieldset>
+            <input type='button' id='btnopen' value='Open child' onclick='openChild();' />
+            <input type='text' id='Text1'/>
+            <input type='text' id='Text2'/>
+            <input type='button' id='btnSendMsg' value='Send Message' onclick='sendMessage();' />
+            <input type='checkbox' id='boolean' value="boolean"/>
+        </fieldset>
+    </form>
+</body>
+</html>
